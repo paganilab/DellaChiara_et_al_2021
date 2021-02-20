@@ -52,6 +52,16 @@ Main figures are reported first, then the supplementary figures.
 
 Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FABP1 and LAMA5 genomic loci in all PDOs. The expanded regions show H3K4me3, H3K27ac, H3K4me1, H3K36me3 and H3K27me3 profiles, along with RNA-seq signal and ChromHMM states for PDOs of different molecular subtypes as indicated.
 
+**Figure 3**
+
+[Fig3. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3a_b_f.R): Unsupervised clustering analysis and pearson correlation heatmap of H3K27ac ChIP-seq data for the 33,131 ChromHMM-defined active enhancers clearly distinguish PDOs from normal colon tissues.
+
+[Fig3. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3a_b_f.R): Volcano plot of differentially enriched enhancer regions between PDOs and normal colon mucosa. Dotted lines indicate thresholds for adjusted P-value < 0.01 and |log2 fold-change| > 2.
+
+Fig3. c:
+
+[Fig3. f](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3a_b_f.R): The Hippo signaling pathway is the most significantly enriched pathway related to the gained enhancer-associated genes that are upregulated in PDOs compared to normal tissues. The size of the circles corresponds to the number of gained-enhancer associated genes present in the geneset of a particular pathway (Gene Ratio). The dotted line indicates the threshold for significantly enriched pathways (false discovery rate < 0.05).
+
 **Figura 4**
 
 [Fig4. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2a.pbs): Signal density plot (top) and corresponding heatmaps (bottom) displaying the relative distribution of TAZ peaks around ChromHMM-defined active enhancers (n = 33,131) and promoters. Data for enhancers and promoters are depicted in yellow and red, respectively.

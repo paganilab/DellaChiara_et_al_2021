@@ -46,7 +46,7 @@ Main figures are reported first, then the supplementary figures.
 
 [Fig2. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2b.R): Pearson correlation heatmap of ChIP- seq data for the complete set of five histone modifications across all PDOs
 
-[Fig2. c]:Combinatorial pattern of histone marks in an 8-state model using ChromHMM (see [nf-chromhmm pipeline](https://github.com/paganilab/DellaChiara_et_al_2021/tree/main/bulk_chipseq/nf-chromhmm)). The heatmap (Emission plot) displays the frequency of the histone modifications 10 found in each state. 
+[Fig2. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2c.py):Combinatorial pattern of histone marks in an 8-state model using ChromHMM (see [nf-chromhmm pipeline](https://github.com/paganilab/DellaChiara_et_al_2021/tree/main/bulk_chipseq/nf-chromhmm)). The heatmap (Emission plot) displays the frequency of the histone modifications 10 found in each state. 
 
 Fig2. d: The probability of each ChromHMM- defined chromatin state overlapping ATAC-seq regions for TCGA colon adenocarcinoma samples is shown across PDOs using a spider plot. 
 
@@ -72,11 +72,11 @@ Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FA
 
 [Supplementary Fig2. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2b.R): PCA of input normalized ChIP-seq signals for the five histone modifications used to build the ChromHMM 8- state model.
 
-Supplementary Fig2. b: Heatmaps showing the annotation of the ChromHMM 8-states with known genomic features (Overlap) and the probability that a state is found in the proximity of another state (Transition).
+[Supplementary Fig2. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2c.py): Heatmaps showing the annotation of the ChromHMM 8-states with known genomic features (Overlap) and the probability that a state is found in the proximity of another state (Transition).
 
-Supplementary Fig2. c: Average proportion of each chromatin state over all PDOs. The chromatin segments for active/flanking TSS and active/flanking enhancer states are merged into the promoter and enhancer functional elements, respectively.
+[Supplementary Fig2. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2c.py): Average proportion of each chromatin state over all PDOs. The chromatin segments for active/flanking TSS and active/flanking enhancer states are merged into the promoter and enhancer functional elements, respectively.
 
-Supplementary Fig2. d:  Distribution of the eight ChromHMM 4 states for each PDO.
+[Supplementary Fig2. d](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2c.py):  Distribution of the eight ChromHMM 4 states for each PDO.
 
 **Supplementary Figure 5**
 

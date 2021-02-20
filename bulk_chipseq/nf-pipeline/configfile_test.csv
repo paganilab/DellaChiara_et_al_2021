@@ -1,0 +1,7 @@
+sample,input,modification,chiptype,project,sampletype,source,patient,yourannotation
+sample_id,input_id,H3K4me3,Sharp,organoids,PDO,K,8,anno
+sample_id,input_id,H3K27ac,Sharp,organoids,PDO,K,8,anno
+sample_id,input_id,H3K4me1,Broad,organoids,PDO,K,8,anno
+sample_id,input_id,H3K36me3,Broad,organoids,PDO,K,8,anno
+sample_id,input_id,H3K27me3,Broad,organoids,PDO,K,8,anno
+sample_id,input_id,WWTR1,Sharp,organoids,PDO,K,10,anno

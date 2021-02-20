@@ -1,0 +1,52 @@
+#usr/bin/env bash
+#PBS -d /analyses/deeptools/
+#PBS -l nodes=1:ppn=10
+#PBS -l mem=70gb,vmem=70gb
+#PBS -N deeptools
+
+#Tools
+source activate deeptools
+export PATH="~${HOME}/miniconda2/envs/deeptools/bin:$PATH"
+
+## Fig2. a - Deeptools on gtf for chromHMM panel
+
+## Data
+H3K4me3='/deepTools/H3K4me3.genebody.gz'
+H3K27ac='/deepTools/H3K27ac.genebody.gz'
+H3K4me1='/deepTools/H3K4me1.genebody.gz'
+H3K36me3='/deepTools/H3K36me3.genebody.gz'
+H3K27me3='/deepTools/H3K27me3.genebody.gz'
+
+outdir='/bulk_chipseq/analysis/deeptools'
+
+# Genomic annotation
+annotation='/bulk_chipseq/ref_genome/gencode.v25.basic.annotation.gtf'
+
+#H3K4me3
+plotHeatmap --matrixFile ${H3K4me3} --outFileName ${outdir}/H3K4me3.genebody.heatmap.col.pdf --colorList "#00004c,#0000ff, white,#F27F7F,#EC3F3F,#E60000" --zMin 0 --zMax 10 --heatmapHeight 20 --dpi 300 --yMin 0 --yMax 30
+
+#H3K27ac
+plotHeatmap --matrixFile ${H3K72ac} --outFileName ${outdir}/H3K72ac.genebody.heatmap.col.pdf --colorList "#00004c,#0000ff, white,#ff61e8, #ff3be2, #FF00D9" --zMin 0 --zMax 10 --heatmapHeight 20 --dpi 300 --yMin 1 --yMax 5.5
+
+#H3K4me1
+plotHeatmap --matrixFile ${H3K4me1} --outFileName ${outdir}/H3K4me1.genebody.heatmap.col.pdf --colorList "#00004c,#0000ff, white,#FFD27F,#FFBB3F, #FFA500" --zMin 0 --zMax 10 --heatmapHeight 20 --dpi 300 --yMin 1.2 --yMax 2.5
+
+#H3K36me3
+plotHeatmap --matrixFile ${H3K36me3} --outFileName ${outdir}/H3K36me3.genebody.heatmap.col.pdf --colorList "#00004c,#0000ff,white,#7FCC7F,#3FB23F,#009900" --zMin 0 --zMax 10 --heatmapHeight 20 --dpi 300 --yMin 0.5 --yMax 2
+
+#H3K27me3
+plotHeatmap --matrixFile ${H3K27me3} --outFileName ${outdir}/H3K27me3.genebody.heatmap.col.pdf --colorList "#00004c,#0000ff,white,#9B9B9B,#696969,#383737" --zMin 0 --zMax 10 --heatmapHeight 20 --dpi 300 --yMin 0.75 --yMax 1.7
+
+
+### Fig 4. c - TAZ distribution over enhancer and promoter regions
+
+wwtr1_bw='/deepTools/wwtr1_norm.coverage.bw'
+distal_reg='/DEA/DBA_Korg_Ntissue_Input_Jup/dba_Korg_Ntissue.bed'
+tss_2kb='/ref_genome/genomic_feature/TSS/gencode.v25.basic.annotation_Window2Kb_total.bed'
+
+#only enhancer and only prom - fig4
+computeMatrix reference-point --numberOfProcessors 4 --regionsFileName ${distal_reg} --scoreFileName ${wwtr1_bw} --outFileName ${outdir}/wwtr1_bw_enh.center.gz -a 3000 -b 3000 --missingDataAsZero --referencePoint center --outFileSortedRegions ${outdir}/wwtr1_bw_enh.center_sortedRegions.gz
+plotHeatmap --matrixFile ${outdir}/wwtr1_bw_enh.center.gz --outFileName ${outdir}/wwtr1_bw_enh.center.heatmap.col.pdf --colorList "#00004c,#0000ff,white,#ffa449,#ff962d,#FF7F00" --zMin 0 --zMax 10 --heatmapHeight 20 --dpi 300 --yMin 1.2 --yMax 2.5
+
+computeMatrix reference-point --numberOfProcessors 4 --regionsFileName ${tss_2kb} --scoreFileName ${wwtr1_bw} --outFileName ${outdir}/wwtr1_bw_prom.center.gz -a 3000 -b 3000 --missingDataAsZero --referencePoint center --outFileSortedRegions ${outdir}/wwtr1_bw_prom.center_sortedRegions.gz
+plotHeatmap --matrixFile ${outdir}/wwtr1_bw_prom.center.gz --outFileName ${outdir}/wwtr1_bw_prom.center.heatmap.col.pdf --colorList "#00004c,#0000ff,white,#e25657,#e83e40,#E31A1C" --zMin 0 --zMax 10 --heatmapHeight 20 --dpi 300 --yMin 1.2 --yMax 2.5

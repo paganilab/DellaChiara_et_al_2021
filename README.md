@@ -96,7 +96,7 @@ Fig4. a:
 
 **Supplementary Figure 4**
 
-Supplementary Fig4. a
+[Supplementary Fig4. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/FigS4a.py): Pie chart showing the localization of the 2,419 ChromHMM-defined gained enhancers within functional features of the genome. UTR, untranslated region. see [this](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/FigS4a.pbs) for the gtf pre-processing.
 
 [Supplementary Fig4. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3c_4b_4c_4f_4g_s5c.py): Percentage of concordant gained enhancers across PDOs.
 

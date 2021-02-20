@@ -69,6 +69,9 @@ install.packages("ggpubr")
 #ggcorrplot
 install.packages("ggcorrplot")
 
+#TCGAbiolink
+BiocManager::install("TCGAbiolinks")
+
 q()
 ```
 

@@ -72,6 +72,12 @@ Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FA
 
 [Fig4. g](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3c_4b_4c_4f_4g_s5c.py): TAZ enrichment in human CRC gained enhancers (G.E.). The percentage of TAZ-bound enhancers increases with the level of conservation across PDOs. The barplots show the percentage of enhancers in each G.E. subset that overlap a TAZ peak or the percentage (mean ± s.d.) of TAZ-bound regions in 1000 random sets generated for each of the G.E. subsets: i) all G.E., ii) G.E. conserved in at least 5 patients, and iii) G.E. conserved in at least 8 patients (see Methods for details). P < 0.001, empirical p-value. 
 
+**Figure 5**
+
+[Fig5. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig5a.Rmd): YAP and TAZ are transcriptionally upregulated in primary tumors compared to normal colon tissues in the TCGA colon adenocarcinoma dataset. Violin plots show the distribution of RNA-seq log2 normalized gene counts adjusted for epithelial cell frequency.
+
+[Fig5. b]()
+
 -----
 
 **Supplementary Figure 1**

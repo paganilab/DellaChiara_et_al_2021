@@ -48,7 +48,7 @@ Main figures are reported first, then the supplementary figures.
 
 [Fig2. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2c.py):Combinatorial pattern of histone marks in an 8-state model using ChromHMM (see [nf-chromhmm pipeline](https://github.com/paganilab/DellaChiara_et_al_2021/tree/main/bulk_chipseq/nf-chromhmm)). The heatmap (Emission plot) displays the frequency of the histone modifications 10 found in each state. 
 
-Fig2. d: The probability of each ChromHMM- defined chromatin state overlapping ATAC-seq regions for TCGA colon adenocarcinoma samples is shown across PDOs using a spider plot. 
+[Fig2. d](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2d.py): The probability of each ChromHMM- defined chromatin state overlapping ATAC-seq regions for TCGA colon adenocarcinoma samples is shown across PDOs using a spider plot. 
 
 Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FABP1 and LAMA5 genomic loci in all PDOs. The expanded regions show H3K4me3, H3K27ac, H3K4me1, H3K36me3 and H3K27me3 profiles, along with RNA-seq signal and ChromHMM states for PDOs of different molecular subtypes as indicated.
 

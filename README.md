@@ -74,9 +74,9 @@ Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FA
 
 **Figure 5**
 
-[Fig5. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig5a.Rmd): YAP and TAZ are transcriptionally upregulated in primary tumors compared to normal colon tissues in the TCGA colon adenocarcinoma dataset. Violin plots show the distribution of RNA-seq log2 normalized gene counts adjusted for epithelial cell frequency.
+[Fig5. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig5a.Rmd): Chromatin accessibility profiles of the 195 conserved gained enhancers in 23 diverse primary human cancer types reveals a signature of 46 pan-CRC enhancers with active chromatin profiles across cancer types (cluster in purple). The heatmap shows hierarchical clustering of log2 normalized insertion counts of ATAC-seq data derived from TCGA (Corces et al., 2018). Colon adenocarcinoma (COAD) samples are the first cancer type reported on the left of the heatmap.
 
-[Fig5. b]()
+[Fig5. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig5b.R): Differences in the H3K27ac intensities of the pan-cancer enhancers in primary tumors relative to normal tissues from public available ChIP-seq data.
 
 -----
 

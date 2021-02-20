@@ -66,10 +66,21 @@ Fig2. e-f: See Hepic website
 
 **Supplementary Figure 2**
 
-FigS2. a:
+Supplementary Fig2. a:
 
-FigS2. b:
+Supplementary Fig2. b:
 
-FigS2. c:
+Supplementary Fig2. c:
 
-FigS2. d:
+Supplementary Fig2. d:
+
+**Supplementary Figure 5**
+
+[Supplementary Fig5. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/FigS5a_FigS6a.R): YAP and TAZ are transcriptionally upregulated in primary tumors compared to normal colon tissues in the TCGA colon adenocarcinoma dataset. Violin plots show the distribution of RNA-seq log2 normalized gene counts adjusted for epithelial cell frequency (see Methods for details). P < 0.0001, Wilcoxon rank sum test. 
+
+
+**Supplementary Figure 6**
+
+[Supplementary Fig6. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/FigS5a_FigS6a.R): Heatmap of RNA-seq log2 normalized counts for target genes of YAP/TAZ-controlled enhancers in the TCGA COAD dataset. Tissue populations and clinical stages are represented by color-coded bars above the heatmap. Expression values of TCGA bulk RNA-seq data were adjusted for epithelial cell frequency (see Methods for details).
+
+

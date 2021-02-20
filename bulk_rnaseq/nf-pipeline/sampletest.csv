@@ -1,0 +1,4 @@
+origin,sample,r1,r2
+tissue_of_origin,sample_id,/path/sample_id_R1_001.fastq.gz,/path/sample_id_R2_001.fastq.gz
+tissue_of_origin,sample_id,/path/sample_id_R1_001.fastq.gz,/path/sample_id_R2_001.fastq.gz
+tissue_of_origin,sample_id,/path/sample_id_R1_001.fastq.gz,/path/sample_id_R2_001.fastq.gz

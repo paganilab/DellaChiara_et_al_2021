@@ -1,0 +1,7 @@
+path
+/path/H3K4me3_no_dup.bam
+/path/H3K27ac_no_dup.bam
+/path/H3K4me1_no_dup.bam
+/path/H3K36me3_no_dup.bam
+/path/H3K27me3_no_dup.bam
+/path/input_no_dup.bam

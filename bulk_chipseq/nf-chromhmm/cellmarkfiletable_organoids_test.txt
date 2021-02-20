@@ -1,0 +1,5 @@
+PDO4	H3K4me3	H3K4me3_no_dup.bam	input_no_dup.bam
+PDO4	H3K27ac	H3K27ac_no_dup.bam	input_no_dup.bam
+PDO4	H3K27me3	H3K4me1_no_dup.bam	input_no_dup.bam
+PDO4	H3K36me3	H3K36me3_no_dup.bam	input_no_dup.bam
+PDO4	H3K27me3	H3K27me3_no_dup.bam	input_no_dup.bam

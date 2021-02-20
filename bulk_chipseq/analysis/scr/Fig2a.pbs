@@ -4,6 +4,8 @@
 #PBS -l mem=70gb,vmem=70gb
 #PBS -N deeptools
 
+# Author: Federica Gervasoni
+
 #Tools
 source activate deeptools
 export PATH="~${HOME}/miniconda2/envs/deeptools/bin:$PATH"

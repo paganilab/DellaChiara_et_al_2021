@@ -58,13 +58,19 @@ Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FA
 
 [Fig3. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3a_b_f.R): Volcano plot of differentially enriched enhancer regions between PDOs and normal colon mucosa. Dotted lines indicate thresholds for adjusted P-value < 0.01 and |log2 fold-change| > 2.
 
-Fig3. c: Percentage of gained enhancers shared by different PDOs.
+[Fig3. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3c_4b_4c_4f_4g_s5c.py): Percentage of gained enhancers shared by different PDOs.
 
 [Fig3. f](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3a_b_f.R): The Hippo signaling pathway is the most significantly enriched pathway related to the gained enhancer-associated genes that are upregulated in PDOs compared to normal tissues. The size of the circles corresponds to the number of gained-enhancer associated genes present in the geneset of a particular pathway (Gene Ratio). The dotted line indicates the threshold for significantly enriched pathways (false discovery rate < 0.05).
 
 **Figura 4**
 
+Fig4. a:
+
 [Fig4. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2a.pbs): Signal density plot (top) and corresponding heatmaps (bottom) displaying the relative distribution of TAZ peaks around ChromHMM-defined active enhancers (n = 33,131) and promoters. Data for enhancers and promoters are depicted in yellow and red, respectively.
+
+[Fig4. f](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3c_4b_4c_4f_4g_s5c.py): Distribution of TAZ peaks across ChromHMM-defined functional elements for active and inactive genomic regions.
+
+[Fig4. g](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3c_4b_4c_4f_4g_s5c.py): TAZ enrichment in human CRC gained enhancers (G.E.). The percentage of TAZ-bound enhancers increases with the level of conservation across PDOs. The barplots show the percentage of enhancers in each G.E. subset that overlap a TAZ peak or the percentage (mean ± s.d.) of TAZ-bound regions in 1000 random sets generated for each of the G.E. subsets: i) all G.E., ii) G.E. conserved in at least 5 patients, and iii) G.E. conserved in at least 8 patients (see Methods for details). P < 0.001, empirical p-value. 
 
 -----
 
@@ -88,10 +94,21 @@ Fig3. c: Percentage of gained enhancers shared by different PDOs.
 
 [Supplementary Fig2. d](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2c.py):  Distribution of the eight ChromHMM 4 states for each PDO.
 
+**Supplementary Figure 4**
+
+Supplementary Fig4. a
+
+[Supplementary Fig4. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3c_4b_4c_4f_4g_s5c.py): Percentage of concordant gained enhancers across PDOs.
+
+[Supplementary Fig4. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3c_4b_4c_4f_4g_s5c.py): Number of conserved gained enhancers across PDOs. d, Boxplots of RNA-seq log2 normalized counts showing the expression distribution of genes that are annotated to gained active enhancers and upregulated in PDOs across normal colon tissues, primary tumors, and PDOs. P < 0.0001, Wilcoxon rank sum test.
+
+Supplementary Fig4. d
+
 **Supplementary Figure 5**
 
 [Supplementary Fig5. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/FigS5a_FigS6a.R): YAP and TAZ are transcriptionally upregulated in primary tumors compared to normal colon tissues in the TCGA colon adenocarcinoma dataset. Violin plots show the distribution of RNA-seq log2 normalized gene counts adjusted for epithelial cell frequency (see Methods for details). P < 0.0001, Wilcoxon rank sum test. 
 
+[Supplementary Fig5. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3c_4b_4c_4f_4g_s5c.py): TAZ signal intensity is higher in conserved (shared by 8-10 PDOs) compared to non-conserved gained enhancers (shared by 1-5 PDOs). * P = 0.028, Mann Whitney U test exact P-value.  
 
 **Supplementary Figure 6**
 

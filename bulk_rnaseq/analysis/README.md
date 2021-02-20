@@ -1,4 +1,4 @@
-## Instruction to install the conda environment used to run bulk RNA-seq downstream analysis.
+### Instruction to recreate the conda environment used to run bulk RNA-seq downstream analysis.
 
 **Install R 3.5**
 
@@ -130,4 +130,19 @@ loaded via a namespace (and not attached):
 [67] rpart_4.1-13           acepack_1.4.1          tidyselect_0.2.5
 [70] xfun_0.4
 ```
+### Instruction to recreate the conda environment used for GSEA using [GSEApy](https://gseapy.readthedocs.io/en/latest/introduction.html)
 
+```
+# Create a new conda environment
+conda create -n gseapy-0.9.9
+
+# Activate the environment
+conda activate gseapy-0.9.9
+
+# Install packages
+conda install python=3.7.2
+pip install gseapy==0.9.9
+conda install -y ipython ipykernel
+
+ipython kernel install --user --name gseapy_0.9.9 --display-name "gseapy_0.9.9"
+```

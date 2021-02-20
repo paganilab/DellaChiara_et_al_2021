@@ -36,7 +36,7 @@ Main figures are reported first, then the supplementary figures.
 
 [Fig 1e - Correlation](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1e_corr.R): Mean log2 normalized gene counts between primary tumors and PDOs were well correlated. 
 
-Fig. 1f: Hierarchical clustering analysis using differentially expressed genes (DEG, adjusted P-value ≤ 0.01) between tumor and normal colon tissues clustered PDOs together with parental tumors. Tissue populations and patients are represented by color-coded bars above the heatmap.
+[Fig. 1f](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1f.R): Hierarchical clustering analysis using differentially expressed genes (DEG, adjusted P-value ≤ 0.01) between tumor and normal colon tissues clustered PDOs together with parental tumors. Tissue populations and patients are represented by color-coded bars above the heatmap.
 
 Fig. 1g: PDOs are enriched in gene signatures of CRC clinical specimen. GSEA on the ranked list of  genes from the comparison between PDOs and normal colon tissue with the normalized enrichment score (NES) and P-value reported.
 

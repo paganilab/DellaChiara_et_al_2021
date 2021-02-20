@@ -40,6 +40,17 @@ Main figures are reported first, then the supplementary figures.
 
 [Fig. 1g](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1g_GSEA.py): PDOs are enriched in gene signatures of CRC clinical specimen. GSEA on the ranked list of  genes from the [comparison between PDOs and normal colon tissue](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1g_DE.R) with the normalized enrichment score (NES) and P-value reported.
 
+**Figure 2**
+Fig2. a:
+
+Fig2. b:
+
+Fig2. c:
+
+Fig2. d:
+
+Fig2. e-f: See Hepic website
+
 -----
 
 **Supplementary Figure 1**
@@ -48,6 +59,16 @@ Main figures are reported first, then the supplementary figures.
 
 [Supplementary Fig1. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1e_venny.R): Concordance of expressed genes detected in PDOs and corresponding tumors. Bar graph represents the proportion of expressed genes (gene count > 5) that is shared between each PDO and its corresponding tumor, and those detected only in the PDO or parental tumor.
 
-Supplementary Fig1. c:
+[Supplementary Fig1. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/FigS1c.py): Genes expressed in primary tumors but not in PDOs (Fig. 1e, Venn diagram, n = 3,412), are enriched for gene signatures of stromal cells.
 
-Supplementary Fig1. d:
+[Supplementary Fig1. d](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1e_corr.R): Correlation of gene expression between matching pairs of tumor tissue and derived PDO.
+
+**Supplementary Figure 2**
+
+FigS2. a:
+
+FigS2. b:
+
+FigS2. c:
+
+FigS2. d:

@@ -64,7 +64,7 @@ Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FA
 
 **Figura 4**
 
-Fig4. a:
+[Fig4. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig4a.R): YAP and TAZ are transcriptionally upregulated in primary tumors and PDOs compared to normal colon tissues. Violin plots show the distribution of normalized gene counts for samples in the three groups. ** P < 0.01, *** P < 0.001, Wilcoxon rank sum test. 
 
 [Fig4. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2a.pbs): Signal density plot (top) and corresponding heatmaps (bottom) displaying the relative distribution of TAZ peaks around ChromHMM-defined active enhancers (n = 33,131) and promoters. Data for enhancers and promoters are depicted in yellow and red, respectively.
 

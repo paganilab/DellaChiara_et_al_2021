@@ -1,0 +1,287 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.4.2
+  kernelspec:
+    display_name: R35_RNAseq
+    language: R
+    name: r35_rnaseq
+---
+
+### Identify a common blue print across different types of cancers using ATAC-seq data from TCGA
+
+Author: Federica Gervasoni
+
+
+I downloaded from here:
+    https://gdc.cancer.gov/about-data/publications/ATACseq-AWG
+
+The .rds "Normalized ATAC-seq insertion counts within the pan-cancer peak set. Recommended format"
+
+and I put it here:
+    /TCGA_ATACseq/TCGA_count
+
+```{r}
+library(knitr)
+library(reshape)
+library(data.table)
+library(DESeq2)
+library(BiocParallel)
+library(tidyr)
+library(stringr)
+library(gdata)
+library(ggplot2)
+library(RColorBrewer)
+library(pheatmap)
+library(genefilter)
+library(magrittr)
+library(dplyr)
+library(ggrepel)
+library(VennDiagram)
+library(edgeR)
+library(preprocessCore)
+library(car)
+```
+
+### Raw count
+
+```{r}
+path_raw='/TCGA_ATACseq/TCGA_count/TCGA-ATAC_PanCan_RawCount/'
+```
+
+```{r}
+raw_atac_count=readRDS(paste0(path_raw,'TCGA-ATAC_PanCan_Raw_Counts.rds'))
+raw_atac_count=raw_atac_count[, -c(1:7)]
+head(raw_atac_count)
+```
+
+```{r}
+logcpm <- cpm(raw_atac_count, log=TRUE,prior.count=5)
+logcpm_norm=normalize.quantiles(logcpm,copy=TRUE)
+rownames(logcpm_norm)=rownames(logcpm)
+colnames(logcpm_norm)=colnames(logcpm)
+```
+
+### Normalized count
+
+```{r}
+path_save='/TCGA_ATACseq/YAP_TAZ_TCGA/'
+```
+
+```{r}
+path='/TCGA_ATACseq/TCGA_count/'
+
+atac_count=readRDS(paste0(path,'TCGA-ATAC_PanCan_Log2Norm_Counts.rds'))
+atac_count=atac_count[, -c(1:7)]
+```
+
+```{r}
+# saveRDS(new_atac_count, file = paste0(path, "TCGA-ATAC_PanCan_Log2Norm_avgRT_Counts.rds"))
+new_atac_count=readRDS(file =  paste0(path, "TCGA-ATAC_PanCan_Log2Norm_avgRT_Counts.rds"))
+```
+
+### Extract from the TCGA the regions which match with YAP/TAZ peaks
+
+
+#Intersect ATAC-seq regions with DE and recurrent regions in 8 out of 10 PDOs overlapping YAP/TAZ peaks
+
+> cd /TCGA_ATACseq/TCGA_PanCancer_peakSet/
+
+> bedtools intersect -a TCGA-ATAC_PanCancer_PeakSet.bed -b /recurrence_10-8_K_org_UP_log2FC2_padj0.01_SQ_2358.bed -wo > recurrence_10-8_K_org_UP_log2FC2_padj0.01_SQ_2358_regionsTCGA_info.txt
+
+```{r}
+# Import the table with the information about the olap betwee:
+# ATAC-seq pan-cancer peaks and region of the enhancer (present in 8 out of 10 patients) with the olap with YAP/TAZ
+path_peaks='/TCGA_ATACseq/TCGA_PanCancer_peakSet/'
+peaks_sel_info=read.table(paste0(path_peaks,'recurrence_10-8_K_org_UP_log2FC2_padj0.01_SQ_2358_regionsTCGA_info.txt'), sep='\t')
+paste0('All the regions detected: ', dim(peaks_sel_info)[1])
+
+# I remove at first the duplicated regions associated to the promoter.
+peaks_sel_info=subset(peaks_sel_info, V4!= as.character(peaks_sel_info[duplicated(peaks_sel_info$V10) & peaks_sel_info$V6=='Promoter',]$V4))
+paste0('Filter duplicated annotated to the Promoter (oly 1): ', dim(peaks_sel_info)[1])
+
+# I keep only 1 ATAC-seq peak for each enhancer region, selecting the strongest accessible region
+peaks_sel_info_noDup=as.data.table(peaks_sel_info)[, .SD[which.max(V5)], by=V10]
+paste0('Keep only 1 ATAC peak associated to enhancers: ', dim(peaks_sel_info_noDup)[1])
+```
+
+```{r}
+peaks_sel_info_noDup$chr_n=as.character(gsub("chr", "", peaks_sel_info_noDup$V7))
+peaks_sel_list=as.character(peaks_sel_info_noDup$V4 )
+```
+
+### Prepare annotation table
+
+```{r}
+peaks_sel_info_noDup_df=as.data.frame(peaks_sel_info_noDup[,c('V4','V7','V10')])
+rownames(peaks_sel_info_noDup_df)=peaks_sel_info_noDup$V4
+colnames(peaks_sel_info_noDup_df)=c("reg_TCGA","chr" ,"enh_regions")
+head(peaks_sel_info_noDup_df)
+```
+
+### Heatmap with all the 195 regions found + all the tumor types
+
+```{r}
+atac_count_sel  <- atac_count[peaks_sel_list, ] # mean of log2 normalized count of RT
+```
+
+```{r}
+paste0('Total number of samples, considering RT and all type of cancers: ', length((gsub("_L.*", "", names(atac_count_sel)))))
+
+paste0()
+
+paste0('Number of samples for each type of cancer, considering TR:')
+table(gsub("_.*", "", names(atac_count)))
+```
+
+```{r}
+#Prepare count mtx
+atac_samples=as.data.frame(colnames(atac_count_sel))
+colnames(atac_samples)='TCGA_id'
+atac_samples=as.data.frame(str_split_fixed(atac_samples$TCGA_id, "_", 2))
+atac_samples=as.data.frame(atac_samples$V1)
+rownames(atac_samples)=colnames(atac_count_sel)
+colnames(atac_samples)='tumor_type'
+```
+
+### Save file as reference x public available
+
+```{r}
+## Extract info about enh_reg_id, ATAC-seq id and enhancer regions coord
+path_regEnh='/DEA/DBA_Korg_Ntissue_Input_Jup/recurrence_Korg/'
+regEnh_bed=read.table(paste0(path_regEnh,'recurrence_10-8_K_org_UP_log2FC2_padj0.01.bed'), sep='\t')
+
+regEnh_bed_ATAC=merge(peaks_sel_info_noDup_df[,c('reg_TCGA','cluster_all','enh_regions')],regEnh_bed, by.x='enh_regions', by.y='V4')
+rownames(regEnh_bed_ATAC)=regEnh_bed_ATAC$reg_TCGA
+regEnh_bed_ATAC=regEnh_bed_ATAC[rownames(atac_count_sel[out_all$tree_row[["order"]],]), ]
+head(regEnh_bed_ATAC[,c('V1','V2','V3','enh_regions','reg_TCGA','cluster_all')])
+
+save_bed='/public_primary_tissue/pancancerEnh_ATACseq/'
+
+write.table(regEnh_bed_ATAC[,c('V1','V2','V3','enh_regions','reg_TCGA','cluster_all')], paste0(save_bed,'recurrence_10-8_K_org_UP_log2FC2_padj0.01_ATAC_195reg_ref.bed'), sep='\t', quote=F, row.names=F, col.names=F)
+```
+
+### Fig5 a - Supervised heatmap
+
+```{r}
+atac_samples_orig=atac_samples
+
+atac_samples$tumor_type_ord=atac_samples$tumor_type
+atac_samples=atac_samples %>% 
+                tibble::rownames_to_column('gene') %>%
+                mutate(tumor_type_ord=recode(tumor_type_ord, 
+                       "'COAD'='1_COAD';
+                       'STAD'='2_STAD';
+                       'ESCA'='3_ESCA';
+                       'BLCA'='4_BLCA';
+                       'CHOL'='5_CHOL';
+                       'LUAD'='6_LUAD';
+                       'LUSC'='7_LUSC';
+                       'THCA'='8_THCA';
+                       'PRAD'='9_PRAD';
+                       'LIHC'='9_1_LIHC';
+                       'UCEC'='1_UCEC';
+                       'ACCx'='2_ACCx';
+                       'CESC'='3_CESC';
+                       'KIRC'='4_KIRC';
+                       'KIRP'='5_KIRP';
+                       'MESO'='6_MESO';
+                       'TGCT'='7_TGCT';
+                       'BRCA'='1_BRCA';
+                       'HNSC'='2_HNSC';
+                       'GBMx'='3_GBMx';
+                       'SKCM'='3_SKCM';
+                       'LGGx'='4_LGGx';
+                       'PCPG'='5_PCPG'")) %>%
+                tibble::column_to_rownames('gene')
+
+atac_samples$tumor_embr_layer=atac_samples$tumor_type
+atac_samples=atac_samples %>%
+                tibble::rownames_to_column('gene') %>%
+                mutate(tumor_embr_layer=recode(tumor_embr_layer,
+                                    "'ACCx'='2_Mesoderm';
+                                    'BLCA'='1_Endoderm';
+                                    'BRCA'='3_Ectoderm';
+                                    'CESC'='2_Mesoderm';
+                                    'CHOL'='1_Endoderm';
+                                    'COAD'='1_Endoderm';
+                                    'ESCA'='1_Endoderm';
+                                    'GBMx'='3_Ectoderm';
+                                    'HNSC'='3_Ectoderm';
+                                    'KIRC'='2_Mesoderm';
+                                    'KIRP'='2_Mesoderm';
+                                    'LGGx'='3_Ectoderm';
+                                    'LIHC'='1_Endoderm';
+                                    'LUAD'='1_Endoderm';
+                                    'LUSC'='1_Endoderm';
+                                    'MESO'='2_Mesoderm';
+                                    'PCPG'='3_Ectoderm';
+                                    'PRAD'='1_Endoderm';
+                                    'SKCM'='3_Ectoderm';
+                                    'STAD'='1_Endoderm';
+                                    'TGCT'='2_Mesoderm';
+                                    'THCA'='1_Endoderm';
+                                    'UCEC'='2_Mesoderm'")) %>%
+                        tibble::column_to_rownames('gene')
+
+ann_colors = list(tumor_type_ord=c('2_ACCx'='#DEA097','4_BLCA'='#E5E95C' ,'1_BRCA'= '#D41C25','3_CESC'='#3C1902','5_CHOL'= '#9A9A9A','1_COAD'='#EB6B05' 
+                               ,'3_ESCA'= '#2D6A25','3_GBMx'='#AE927C','2_HNSC'='#ABAB38',
+                               '4_KIRC'= '#8837E4','5_KIRP'='#9BF078' ,'4_LGGx'= '#CCB7F4','9_1_LIHC'= '#3EB2E6','6_LUAD'='#2643C9' 
+                               ,'7_LUSC'='#79D7B4' ,'6_MESO'= '#C4D6BC',
+                               '5_PCPG'= '#F8D89A','9_PRAD'='#43436E','3_SKCM'= '#AF3233','2_STAD'='#E28A82' ,'7_TGCT'='#C7CCF7' 
+                               ,'8_THCA'='#8D0081' ,'1_UCEC'='#E7CFEF'),
+                                reg_col_endo=c('YES'='#e41a1c', 'NO'='#797980'), 
+                                cluster_endo=c('1'='#4daf4a','2'='#984ea3', '3'='#ff7f00', '4'='#e41a1c','5'='#377eb8'),
+                                reg_col_all=c('YES'='#e41a1c', 'NO'='#797980'), 
+                                cluster_all=c('1'='#4daf4a','2'='#984ea3', '3'='#ff7f00', '4'='#e41a1c','5'='#377eb8'),
+                                cluster_all_27Ac=c('1'='#984ea3','2'='#e41a1c', '3'='#377eb8', '4'='#ff7f00'))
+```
+
+```{r}
+atac_count_sel_ord=atac_count_sel[ ,order(match(colnames(atac_count_sel), rownames(atac_samples[order(as.character(atac_samples$tumor_embr_layer), as.character(atac_samples$tumor_type_ord)) ,]))) ]
+```
+
+```{r}
+out_all=pheatmap(atac_count_sel_ord, scale="none",
+         annotation_col = atac_samples[,c('tumor_embr_layer','tumor_type_ord')],
+         annotation_colors = ann_colors,
+         cluster_cols= FALSE,
+         cluster_rows=TRUE,
+         show_rownames =TRUE,
+         show_colnames =FALSE,
+         color = colorRampPalette(rev(c("#590c29","#8A0807", "#D51214", "#FFFEFD", "#3E44CC", "#0A2A87")))(1250), 
+         breaks = c(seq(-2,-1.1,length=250),seq(-1,0.64,length=250), seq(0.65,0.8,length=250), seq(0.9,3.7,length=250), seq(3.8,4.9,length=250), seq(5,6,length=250)),
+         fontsize=3)
+```
+
+### Extract clustering info
+
+```{r}
+n_k=5
+
+head(sort(cutree(out_all$tree_row, k=n_k)))
+table(sort(cutree(out_all$tree_row, k=n_k)))
+```
+
+```{r}
+tree_cluster=NULL
+tree_cluster=as.data.frame(sort(cutree(out_all$tree_row, k=n_k)))
+colnames(tree_cluster)='cluster_all'
+tree_cluster$reg_TCGA=rownames(tree_cluster)
+
+peaks_sel_info_noDup_df$reg_TCGA=rownames(peaks_sel_info_noDup_df)
+peaks_sel_info_noDup_df$cluster_all=NULL
+
+peaks_sel_info_noDup_df=merge(tree_cluster, peaks_sel_info_noDup_df, by='reg_TCGA')
+rownames(peaks_sel_info_noDup_df)=peaks_sel_info_noDup_df$reg_TCGA
+
+# add label for pan-cancer and not pan-cancer regions
+peaks_sel_info_noDup_df$cluster_all_simple=ifelse((peaks_sel_info_noDup_df$cluster_all==3) | (peaks_sel_info_noDup_df$cluster_all==5), 'pan_cancer', 'not_pan')
+
+head(peaks_sel_info_noDup_df)
+```

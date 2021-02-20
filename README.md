@@ -46,7 +46,7 @@ Main figures are reported first, then the supplementary figures.
 
 [Fig2. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2b.R): Pearson correlation heatmap of ChIP- seq data for the complete set of five histone modifications across all PDOs
 
-[Fig2. c]:Combinatorial pattern of histone marks in an 8-state model using ChromHMM. The heatmap (Emission plot) displays the frequency of the histone modifications 10 found in each state. 
+[Fig2. c]:Combinatorial pattern of histone marks in an 8-state model using ChromHMM (see [nf-chromhmm pipeline](https://github.com/paganilab/DellaChiara_et_al_2021/tree/main/bulk_chipseq/nf-chromhmm)). The heatmap (Emission plot) displays the frequency of the histone modifications 10 found in each state. 
 
 Fig2. d: The probability of each ChromHMM- defined chromatin state overlapping ATAC-seq regions for TCGA colon adenocarcinoma samples is shown across PDOs using a spider plot. 
 

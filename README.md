@@ -78,6 +78,20 @@ Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FA
 
 [Fig5. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig5b.R): Differences in the H3K27ac intensities of the pan-cancer enhancers in primary tumors relative to normal tissues from public available ChIP-seq data.
 
+**Figure 6**
+
+[Fig6. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/sc_RNAseq/scr/Fig6.py): t-distributed stochastic neighbor embedding (t-SNE) visualization depicting the major cell types identified in scRNA-seq data of primary tumor and normal tissues from 23 CRC patients.
+
+[Fig6. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/sc_RNAseq/scr/Fig6.py): t-SNE visualization of the CRB score across all cell populations. 
+
+[Fig6. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/sc_RNAseq/scr/Fig6.py): Malignant cells display significantly higher CRB score. Distribution of the CRB score in the malignant (grey) and non-malignant epithelial clusters (green), and in all other major cell populations. Boxplots describe the median and interquartile range with whiskers denoting the 1.5 x interquartile range.  P < 0.0001, Wilcoxon rank sum test
+
+[Fig6. d](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/sc_RNAseq/scr/Fig6-epith.py): t-SNE representation of the CRB scores across 18,539 epithelial cells. Contour lines denote normal epithelial cells. 
+
+[Fig6. e](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/sc_RNAseq/scr/Fig6-epith.py): t-SNE representation of the stemness scores across 18,539 epithelial cells. Contour lines denote normal epithelial cells. 
+
+[Fig6. f](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/sc_RNAseq/scr/Fig6-epith.py): The cancer regulatory blueprint does not relate to stemness. t-SNE representation of the difference between the CRB and stemness score across all epithelial cells. Cells depicted in grey display similar levels of the two scores, whereas cells in purple and green display mutually exclusive high levels of CRB or stemness, respectively. Contour lines denote normal epithelial cells.
+
 -----
 
 **Supplementary Figure 1**
@@ -120,4 +134,9 @@ Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FA
 
 [Supplementary Fig6. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/FigS5a_FigS6a.R): Heatmap of RNA-seq log2 normalized counts for target genes of YAP/TAZ-controlled enhancers in the TCGA COAD dataset. Tissue populations and clinical stages are represented by color-coded bars above the heatmap. Expression values of TCGA bulk RNA-seq data were adjusted for epithelial cell frequency (see Methods for details).
 
+[Supplementary Fig6. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/sc_RNAseq/scr/Fig6.py): Detailed t-SNE visualization of all cell populations identified in the dataset. Cell type designations are based on the original clustering.
+
+[Supplementary Fig6. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/sc_RNAseq/scr/Fig6-epith.py):  Sub-clustering analysis of 18,539 tumor and normal epithelial cells showing patient-specific clustering of most tumor cells. 
+
+[Supplementary Fig6. d](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/sc_RNAseq/scr/Fig6.py): t-SNE plot depicting the distribution of the stemness score across all cell populations.
 

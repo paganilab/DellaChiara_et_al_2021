@@ -42,7 +42,7 @@ Main figures are reported first, then the supplementary figures.
 
 **Figure 2**
 
-Fig2. a:
+[Fig2. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2a.pbs): Histone modifications localization in relation to the gene body as well as regions surrounding +/- 3 Kb of the transcription start (TSS) and end (TES) sites. Representative density plots of average intensity (top) and corresponding heatmaps (bottom) display the relative distribution of H3K4me3 (red), H3K27ac (pink), H3K4me1 (yellow), H3K36me3 (green), and H3K27me3 (grey) signals for all the genes present in the GENCODEv25 annotation. 
 
 [Fig2. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2b.R): Pearson correlation heatmap of ChIP- seq data for the complete set of five histone modifications across all PDOs
 
@@ -52,6 +52,9 @@ Fig2. d: The probability of each ChromHMM- defined chromatin state overlapping A
 
 Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FABP1 and LAMA5 genomic loci in all PDOs. The expanded regions show H3K4me3, H3K27ac, H3K4me1, H3K36me3 and H3K27me3 profiles, along with RNA-seq signal and ChromHMM states for PDOs of different molecular subtypes as indicated.
 
+**Figura 4**
+
+[Fig4. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2a.pbs): Signal density plot (top) and corresponding heatmaps (bottom) displaying the relative distribution of TAZ peaks around ChromHMM-defined active enhancers (n = 33,131) and promoters. Data for enhancers and promoters are depicted in yellow and red, respectively.
 
 -----
 

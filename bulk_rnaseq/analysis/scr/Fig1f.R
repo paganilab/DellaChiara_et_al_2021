@@ -14,13 +14,11 @@
 #     name: r35_rnaseq
 # ---
 
-# ### K_org vs N_crypt DGE analysis 
+# ### DE analysis between Tumor and Normal tissue - matched patients with ChIP-seq
 #
-# title: "KvsNcr.matched.ChIP.Dgroup_1organoid"
+# Author: Federica Gervasoni
 #
-# operator: Federica Gervasoni
-#
-# design = ~ Patient class
+# design = ~ group + patient
 
 # ### Library
 
@@ -40,27 +38,19 @@ library(magrittr)
 library(dplyr)
 library(ggrepel)
 library(VennDiagram)
-library(ggpubr)
-
-## set universal plot size:
-options(repr.plot.width=5, repr.plot.height=5)
+library(genefilter)
 
 # ### Read sampleinfo
 
-# +
-setwd("/storage/data/MAP/projects/organoids/bulk_rnaseq/analysis/DESeq/")
+## set universal plot size:
+options(repr.plot.width=6, repr.plot.height=6)
 
-# Read sampleifo
+#Rds with all the clinical information about the patients (please see Supplementary Table 1)
 sampleinfo=readRDS("sampleinfo.rds")
-sampleinfo$passage=ifelse(sampleinfo$passage.num=="ps3", "middle", as.character(sampleinfo$passage))
-sampleinfo$condition2=ifelse(sampleinfo$passage.num=="ps3" & sampleinfo$group=="CRC_K", "K_middle", as.character(sampleinfo$condition2))
-# -
 
 # ### Read annotation
 
 # +
-setwd("/storage/data/MAP/projects/organoids/bulk_rnaseq/analysis/DESeq/")
-
 # Read annotation (excludes PAR_Y genes)
 annotation=readRDS("annotation_file_from_gtf.rds")
 length(unique(annotation$gene_id))
@@ -77,52 +67,33 @@ MT.genes=annotation[annotation$chromosome=="chrM", "gene_id"]
 # ### Read raw counts and remove MT genes
 
 # +
-setwd("/storage/data/MAP/projects/organoids/bulk_rnaseq/analysis/DESeq/")
-
 # Read raw counts
 counts=readRDS("org_fcounts_all.rds")
-rownames(counts)=gsub("[.].*", "", rownames(counts))
 
 counts.noMT=counts[!rownames(counts)%in%MT.genes,]
-    
-length(unique(rownames(counts)))
-length(unique(rownames(counts.noMT)))
+rownames(counts.noMT)=gsub("[.].*","",rownames(counts.noMT))
 
+length(unique(rownames(counts)))
+length(unique(rownames(counts.noMT))) 
 identical(rownames(sampleinfo), colnames(counts.noMT))
 # -
 
-# ### Read dds.all
-#
-# Excluding Normal biopsy, keeping Tumor biopsy and tumors with high MT counts
-
-# +
-dds.all=readRDS("/storage/data/MAP/projects/organoids/bulk_rnaseq/analysis/DESeq/All.Excl.SQ_1977.SQ_2268.Dgroup/org_dds.All.Excl.SQ_1977.SQ_2268.Dgroup.noMT.rds")
-
-# Modify the gene_id
-rownames(dds.all)=gsub("[.].*", "", rownames(dds.all))
-colData(dds.all)$passage=ifelse(colData(dds.all)$passage.num=="ps3", "middle", as.character(colData(dds.all)$passage))
-
-norm.all=counts(dds.all, normalized=TRUE)
-
-norm.all.log2=log2(norm.all + 1)
-# -
-
-# ## Analysis 
+# ## Analysis
 #
 # ### Set comparison
 
-path='/storage/data/MAP/projects/organoids/bulk_rnaseq/analysis/DESeq/DGE/KorgvsNcr/KorgvsNcr.matched.ChIP.Dgroup_1organoid.patient/'
+path="/DESeq/DGE/KvsNcr/KvsNcr.matched.ChIP.Dgroup.patient/"
 
 # +
-name="KorgvsNcr.matched.ChIP.Dgroup_1organoid.patient"
+name="KvsNcr.matched.ChIP.Dgroup.patient"
 
+cond=c("K_tissue","N_tissue")
 
 matched=c("CRC4", "CRC8", "CRC10", "CRC11", "CRC13", "CRC18", "CRC22", "CRC24", "CRC36", "CRC41")
-excl=c("SQ_1959", "SQ_1953", "SQ_1954","SQ_1956", "SQ_1963", "SQ_1970", "SQ_1973", "SQ_1974", "SQ_1976", "SQ_1987", "SQ_2013", "SQ_2014", "SQ_2017", "SQ_2254", "SQ_2265")
 
-samples=droplevels(sampleinfo[sampleinfo$tissue != "biopsy" & sampleinfo$condition !="N_organoids"  & sampleinfo$condition !="K_tissue" & sampleinfo$patient%in%matched  & !sampleinfo$sample%in%excl & sampleinfo$passage !="early", ])
+samples=droplevels(sampleinfo[sampleinfo$condition2%in%cond & sampleinfo$patient%in%matched,])
 samples$group=factor(samples$group, levels=c("CRC_N", "CRC_K"))
-samples$condition2=factor(samples$condition2, levels=c("N_tissue", "K_organoids"))
+samples$condition2=factor(samples$condition2, levels=c("N_tissue", "K_tissue"))
 
 file.dds = paste0(path, "org_dds.", name, ".noMT.rds")
 file.rld = paste0(path, "org_rld.", name, ".noMT.rds")
@@ -130,9 +101,9 @@ file.rld = paste0(path, "org_rld.", name, ".noMT.rds")
 contrast=c("group", "CRC_K", "CRC_N")
 
 table(samples$group)
-table(samples$condition)
+table(samples$condition2)
 table(samples$tissue)
-table(samples$condition, samples$patient)
+table(samples$condition2, samples$patient)
 # -
 
 # ### Create dds and rld objects
@@ -144,13 +115,13 @@ if (!file.exists(file.dds)){
     
     dds <- DESeqDataSetFromMatrix(countData = counts.noMT[,colnames(counts.noMT)%in%samples$sample],
                               colData = samples,
-                              design = ~ patient + group)
+                              design = ~ patient +group)
 
     # Removing non-expressed genes
     dds <- dds[rowSums(counts(dds)) >= 10,]
     
+    #Create dds and rld
     dds <- DESeq(dds)
-    
     rld <- rlog(dds, blind = FALSE)
 
     saveRDS(object = dds, file = file.dds)
@@ -170,23 +141,23 @@ dds
 dds@design
 colData(dds)
 table(dds$group)
-table(dds$condition)
+table(dds$condition2)
 table(dds$tissue)
-table(dds$condition, dds$patient)
+table(dds$condition2, dds$patient)
 table(dds$passage, dds$patient)
 # -
 
-# ### DGE
+# ### DE
 
 # +
-table(colData(dds)[,"condition"])
+table(colData(dds)[,"condition2"])
 contrast
 res <- results(dds, contrast=contrast, alpha=0.05)
 
 # Summary
 res[order(res$padj),]
 summary(res)
-sum(res$padj <= 0.05, na.rm=TRUE)
+sum(res$padj < 0.05, na.rm=TRUE)
 # -
 
 # ### Metadata
@@ -215,61 +186,27 @@ omit.ids=res2[duplicated(res2$gene_name) | res2$gene_name=="" | !complete.cases(
 omit.ids_list=omit.ids$gene_id
 
 write.table(res2[!res2$gene_id%in%omit.ids_list, c("gene_name","log2FoldChange")], paste0(path, name, ".res.all.log2FC.rnk"), row.names = F, col.names = T, quote=F, sep="\t")
-write.table(res2[!res2$gene_id%in%omit.ids_list,c("gene_name","padjxFC")], paste0(path, name, ".res.all.pval.sign.FC.rnk"), row.names = F, col.names = T, quote=F, sep="\t")
 
-# Lowest logFC
-resSig <- subset(res2, res2$padj <= 0.05)
-min(resSig$log2FoldChange[resSig$log2FoldChange > 0])
-max(resSig$log2FoldChange[resSig$log2FoldChange < 0])
+write.table(res2[!res2$gene_id%in%omit.ids_list,c("gene_name","padjxFC")], paste0(path, name, ".res.all.pval.sign.FC.rnk"), row.names = F, col.names = T, quote=F, sep="\t")
 # -
 
-# ### DGEgenes logFC >= 1 & p-value <= 0.05
+# ### DGEgenes logFC > 1 & p-value < 0.05
 
 # +
-DGEgenes <- rownames(subset(res[order(res$padj),], padj <= 0.05  & abs(log2FoldChange)>=0))
+DGEgenes <- rownames(subset(res[order(res$padj),], padj < 0.05  & abs(log2FoldChange)>1))
 table(DGEgenes%in%resSig$gene_id)
 
 # Upregulated
-DGEgenes.up <- rownames(subset(res[order(res$padj),], padj <= 0.05  & log2FoldChange>=0))
+DGEgenes.up <- rownames(subset(res[order(res$padj),], padj < 0.05  & log2FoldChange>1))
 table(DGEgenes.up%in%DGEgenes)
 
 # Downregulated
-DGEgenes.down <- rownames(subset(res[order(res$padj),], padj <= 0.05  & log2FoldChange<=(0)))
+DGEgenes.down <- rownames(subset(res[order(res$padj),], padj < 0.05  & log2FoldChange<(-1)))
 table(DGEgenes.down%in%DGEgenes)
-# -
-# ### Check if the genes associated to Differentially active regions (H3K27Ac- log2FC >2 and padj<0.01) in chip-seq Korg vs N tissue are also DE
 
 # +
-### Check if the genes annotated to DA in Korg and Ntissue are DE in K tissue.
-path_save='/storage/data/MAP/projects/organoids/bulk_chipseq/analysis/diffbind/chromHMM_enhancer_org_pA/DEA/DBA_Korg_Ntissue_Input_Jup/DESeq2/annotation/'
+dds.all=readRDS(paste0(path, "/All.matched.ChIP.Dgroup_1organoid/org_dds.All.matched.ChIP.Dgroup_1organoid.noMT.rds"))
 
-library(VennDiagram)
-
-genes_list=read.table("/storage/data/MAP/projects/organoids/bulk_chipseq/analysis/diffbind/chromHMM_enhancer_org_pA/DEA/DBA_Korg_Ntissue_Input_Jup/DESeq2/annotation/K_org_UP_log2FC2_padj0.01_annoHiC_actProm_sym.txt") #1932
-genes=merge(genes_list, annotation[,c("gene_id", "gene_name")], by.x="V1", by.y="gene_name") #1842
-intersect_KorgUP_genes=as.data.frame(intersect(DGEgenes.up,genes$gene_id))
-colnames(intersect_KorgUP_genes)="gene_id"
-
-#add gene symbols and save
-intersect_KorgUP_genes_df=merge(intersect_KorgUP_genes, annotation[,c("gene_id", "gene_name")], by="gene_id")
-# write.table(intersect_KorgUP_genes_df, paste0(path_save, "K_org_UP_log2FC2_padj0.01_annoHiC_actProm_sym_diffGenes_Korg.txt"), row.names = F, col.names = T, quote=F, sep="\t")
-
-paste0("#UP_Korg: ", length(DGEgenes.up))
-paste0("#DE_enhKorg_orig: ", dim(genes_list))
-paste0("#DE_enhKorg: ", dim(genes))
-paste0("#DE_enhKorg + UPKorg: ",length(intersect(DGEgenes.up,genes$gene_id)))
-
-grid.newpage()
-draw.pairwise.venn(length(DGEgenes.up), length(genes$gene_id), length(intersect(DGEgenes.up,genes$gene_id)), category = c("KorgvsNcr", "enh_DEKorg"), fill = c("skyblue", "pink1"), cex=1, col="black", lwd=1, cat.dist=0.1)
-# -
-
-
-# ### Boxplot plot - Fig 3
-
-# +
-### Heatmap on the specific genes 
-
-dds.all=readRDS("/storage/data/MAP/projects/organoids/bulk_rnaseq/analysis/DESeq/All.matched.ChIP.Dgroup_1organoid/org_dds.All.matched.ChIP.Dgroup_1organoid.noMT.rds")
 # Modify the gene_id
 rownames(dds.all)=gsub("[.].*", "", rownames(dds.all))
 
@@ -278,90 +215,59 @@ norm.all=counts(dds.all, normalized=TRUE)
 norm.all.log2=log2(norm.all + 1)
 
 # +
-gene_list=as.character(intersect(DGEgenes.up,genes$gene_id))
+padj_filter=0.01
+log2FC=0
 
-crc.expr.normalized_genes.check  <- norm.all.log2[row.names(norm.all.log2)%in%gene_list,]
+DGEgenes <- rownames(subset(res[order(res$padj),], padj <= padj_filter  & abs(log2FoldChange)>=log2FC))
+table(DGEgenes%in%resSig$gene_id)
 
-table(row.names(crc.expr.normalized_genes.check)%in%gene_list)
+# Upregulated
+DGEgenes.up <- rownames(subset(res[order(res$padj),], padj <= padj_filter  & log2FoldChange>=log2FC))
+table(DGEgenes.up%in%DGEgenes)
 
-crc.expr.normalized_genes.check.melt=as.data.frame(crc.expr.normalized_genes.check)
-crc.expr.normalized_genes.check.melt$gene_id=row.names(crc.expr.normalized_genes.check.melt)
-crc.expr.normalized_genes.check.melt=setDT(crc.expr.normalized_genes.check.melt)
-crc.expr.normalized_genes.check.melt=melt(crc.expr.normalized_genes.check.melt, id.vars="gene_id", variable.name="sample")
-crc.expr.normalized_genes.check.melt=merge(crc.expr.normalized_genes.check.melt, sampleinfo, by="sample")
-
-# pdf(paste0(path, "boxplot_expression495genes_Funcional_NKtis_PDO", ".pdf"))
-p <- ggplot(crc.expr.normalized_genes.check.melt, aes(x=condition, y=value, color=condition, fill=condition)) + 
-  geom_boxplot(alpha=.5, notch=TRUE) +
-  scale_fill_manual(values=c("#C76E24", "#AF0416", "#033E8C")) +
-  scale_color_manual(values=c("#C76E24", "#AF0416","#033E8C")) +
-  labs(x="", y="Normalised counts log2 transformed") +
-  theme_classic() +
-  theme(axis.title=element_text(size=14), axis.text = element_text(size=12), axis.text.x = element_text(angle = 60, vjust=0.8, hjust = 1), legend.title = element_blank()) +
-  scale_x_discrete(limits=c("N_tissue", "K_tissue","K_organoids"))
-
-# # # # Statistics
-my_comparisons <- list( c("K_organoids", "N_tissue"), c("K_tissue", "N_tissue"))
-p + stat_compare_means(comparisons = my_comparisons, label.y = c(17, 16), method = "wilcox.test", aes(label = ..p.signif..),
-                      paired = FALSE)
-
-compare_means(value ~ condition,  data = crc.expr.normalized_genes.check.melt, ref.group = "N_tissue",
-              method = "wilcox.test")
-
-# dev.off()
+# Downregulated
+DGEgenes.down <- rownames(subset(res[order(res$padj),], padj <= padj_filter  & log2FoldChange<=(-log2FC)))
+table(DGEgenes.down%in%DGEgenes)
 # -
 
-# ### Save the lists
+# ### Fig1 f - Heatmap
 
 # +
-#Save 495 genes 
-name='K_org_UP_log2FC2_padj0.01_annoHiC_actProm_sym_diffGenes_Korg'
+# Extract common UP and common Down reg genes
+DGEgenes_list=c(as.character(DGEgenes.up),as.character(DGEgenes.down))
 
-intersect_KorgUP_genes_df_density=merge(res2[,c('chromosome','start_position','end_position', 'gene_id')], intersect_KorgUP_genes, by="gene_id")
-intersect_KorgUP_genes_df_density=intersect_KorgUP_genes_df_density[,c(2,3,4,1)]
-write.table(intersect_KorgUP_genes_df_density, paste0(path_save, name,"_density.bed"), row.names = F, col.names = F, quote=F, sep="\t")
+## Subset the log2 normalised dds.all dataset for the common genes
+norm.all.log2.con  <- norm.all.log2[match(DGEgenes_list, row.names(norm.all.log2)), ]
 
-paste0("Biotype of 495 genes")
-table(intersect_KorgUP_genes_df_density$biotype)
+table(row.names(norm.all.log2.con)%in%DGEgenes_list)
+table(colnames(norm.all.log2.con)==colData(dds.all)[,"sample"])
 
-# +
-### Check up-regulated genes in ChIP-seq and RNA-seq
-chip=read.table("/storage/data/MAP/projects/organoids/bulk_chipseq/analysis/diffbind/chromHMM_enhancer_org_pA/DEA/DBA_Korg_Ntissue_Input_Jup/recurrence_Korg/annotation/recurrence_10-8_K_org_UP_log2FC2_padj0.01_SQ_2385_toAnno_annoHiC_actProm_sym.txt", header=F, sep="\t", quote=NULL)
+### Scale manually
+norm.all.log2.con.scale.man=apply(norm.all.log2.con,2, function(x){(x-rowMeans(norm.all.log2.con))/rowSds(norm.all.log2.con)})
 
+### Create the annotation table
+anno <- as.data.frame(colData(dds.all)[, c("patient", "condition")])
 
-KorgNcr=read.table("/storage/data/MAP/projects/organoids/bulk_rnaseq/analysis/DESeq/DGE/KorgvsNcr/KorgvsNcr.matched.ChIP.Dgroup_1organoid.patient/KorgvsNcr.matched.ChIP.Dgroup_1organoid.patient.res.all.txt", header=T, sep="\t", quote=NULL)
-KorgNcr=subset(KorgNcr, padj <= 0.05 & log2FoldChange > 0 )
+### reorder columns according to groups
+anno=anno[order(anno$condition, decreasing = TRUE),]
+anno_columns=row.names(anno)
 
-intersect(KorgNcr$gene_id,chip$V1)
+### Assign specific colors
+ann_colors = list(condition = c(K_organoids="#9b1477", K_tissue="#590242", N_tissue="#6A6B06"), 
+                  patient=c(CRC10="#e41a1c", CRC11='#377eb8', CRC13='#FF62BC', CRC18='#984ea3', CRC22='#ff7f00', 
+                            CRC24='#ffff33', CRC36='#a65628',CRC4='#999999', CRC41="#65B7F3", CRC8='#4daf4a' ))
 
-grid.newpage()
-draw.pairwise.venn(length(KorgNcr$gene_name), length(chip$V1), length(intersect(KorgNcr$gene_name,chip$V1)), category = c("KorgvsNcr", "ChIP"), fill = c("skyblue", "pink1"), cex=3, col="black", lwd=1, cat.dist=0.1)
+norm.all.log2.con.scale.man=norm.all.log2.con.scale.man[,anno_columns]
 
-# +
-intersection_ChIPseq_PDO_Ntis=as.character(intersect(KorgNcr$gene_name,chip$V1))
+pdf=pheatmap(norm.all.log2.con.scale.man, scale="none",
+         cluster_cols =TRUE,
+         cluster_rows=F,         
+         annotation_col = anno,
+         annotation_colors = ann_colors,
+         show_rownames=FALSE,
+         color = colorRampPalette(rev(c("#8A0807", "#D51214", "#FFFEFD", "#3E44CC", "#0A2A87")))(1250), 
+         breaks = c(seq(-5,-2.60,length=250), seq(-1,0.5,length=250),seq(0.6,0.8,length=250),seq(0.9,1.7,length=250), seq(3.1,5,length=250)),
+         fontsize=8)
 
-write.table(intersection_ChIPseq_PDO_Ntis, paste0(path,"intersection_ChIPseq_UP_genes_POD_Ntissue.txt"), row.names = F, col.names = T, quote=F, sep="\t")
-# -
-
-# ### Intersect enhancer 8-10 YAP/TARGET with Ktissue vs Ntissue
-
-# +
-KvsNcr=read.table("/storage/data/MAP/projects/organoids/bulk_rnaseq/analysis/DESeq/DGE/KvsNcr/KvsNcr.matched.ChIP.Dgroup.patient/KvsNcr.matched.ChIP.Dgroup.patient.res.all.txt", header=T, sep="\t", quote=NULL)
-
-KvsNcrUP=subset(KvsNcr, padj <= 0.05 & log2FoldChange > 0 )
-dim(KvsNcrUP)
-# -
-
-conUP=intersect(KvsNcrUP$gene_name, KorgNcr$gene_name)
-length(conUP)
-
-grid.newpage()
-draw.pairwise.venn(length(conUP), length(chip$V1), length(intersect(conUP,chip$V1)), category = c("KvsNcr", "ChIP"), fill = c("skyblue", "pink1"), cex=3, col="black", lwd=1, cat.dist=0.1)
-
-# +
-intersection_ChIPseq_TRS=intersect(conUP,chip$V1)
-
-write.table(intersection_ChIPseq_TRS, paste0(path,"intersection_ChIPseq_UP_genesKorgandKtissue.txt"), row.names = F, col.names = T, quote=F, sep="\t")
-# -
-
-
+grid::grid.newpage()
+grid::grid.draw(pdf)

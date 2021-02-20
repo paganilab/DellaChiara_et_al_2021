@@ -24,6 +24,10 @@ The main folder is subdivided in:
 
 Below a more detailed link to the script for each figure present in the paper (figure legend descriptions from the paper are reported for a better understanding).
 
+Main figures are reported first, then the supplementary figures.
+
+**Figure 1**
+
 Fig. 1d: PCA on normalised gene counts from RNA-seq data distinguished normal colon mucosa, primary tumor and PDOs.
 
 Fig. 1e: Venn diagram showing the number of concordant expressed genes between tumors and PDOs. Mean log2 normalized gene counts between primary tumors and PDOs were well correlated. 

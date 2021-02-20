@@ -32,10 +32,19 @@ Main figures are reported first, then the supplementary figures.
 
 [Fig. 1d](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1d.R): PCA on normalised gene counts from RNA-seq data distinguished normal colon mucosa, primary tumor and PDOs.
 
-Fig. 1e - Venny: Venn diagram showing the number of concordant expressed genes between tumors and PDOs. 
+[Fig. 1e - Venny](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1e_venny.R): Venn diagram showing the number of concordant expressed genes between tumors and PDOs. 
 
 [Fig 1e - Correlation](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1e_corr.R): Mean log2 normalized gene counts between primary tumors and PDOs were well correlated. 
 
 Fig. 1f: Hierarchical clustering analysis using differentially expressed genes (DEG, adjusted P-value ≤ 0.01) between tumor and normal colon tissues clustered PDOs together with parental tumors. Tissue populations and patients are represented by color-coded bars above the heatmap.
 
 Fig. 1g: PDOs are enriched in gene signatures of CRC clinical specimen. GSEA on the ranked list of  genes from the comparison between PDOs and normal colon tissue with the normalized enrichment score (NES) and P-value reported.
+
+**Supplementary Figure 1**
+Supplementary Fig1. a: MA plot of log2 mean gene expression over log2 fold-change showing the lack of differentially expressed genes between early and late passages of organoids.
+
+[Supplementary Fig1. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1e_venny.R): Concordance of expressed genes detected in PDOs and corresponding tumors. Bar graph represents the proportion of expressed genes (gene count > 5) that is shared between each PDO and its corresponding tumor, and those detected only in the PDO or parental tumor.
+
+Supplementary Fig1. c:
+
+Supplementary Fig1. d:

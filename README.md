@@ -102,7 +102,7 @@ Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FA
 
 [Supplementary Fig4. c](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3c_4b_4c_4f_4g_s5c.py): Number of conserved gained enhancers across PDOs. d, Boxplots of RNA-seq log2 normalized counts showing the expression distribution of genes that are annotated to gained active enhancers and upregulated in PDOs across normal colon tissues, primary tumors, and PDOs. P < 0.0001, Wilcoxon rank sum test.
 
-Supplementary Fig4. d
+[Supplementary Fig4. d](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_rnaseq/analysis/scr/Fig1g_DE.R): Boxplots of RNA-seq log2 normalized counts showing the expression  distribution of genes that are annotated to gained active enhancers and upregulated in PDOs across normal colon tissues, primary tumors, and PDOs. P < 0.0001, Wilcoxon rank sum test.
 
 **Supplementary Figure 5**
 

@@ -1,0 +1,53 @@
+# Author: Federica Gervasoni
+
+#FigS4 a - preprocessing - feature extarction from gtf
+
+#Programs needed
+module load bedtools/2.24.0
+
+# The GTF file is located here:
+gtf="/gencode.v25.basic.annotation.gtf"
+
+#I'll put all the files here:
+path="/annotation_genomicFeatures/"
+
+# Intergenic regions
+cat ${gtf} | awk 'BEGIN{OFS="\t";} $3=="gene" {print $1,$4-1,$5}' | bedtools sort -i - | bedtools complement -i - -g $path/hg38.chrom.sizes | awk '$4=("intergenic" $4)' | sed 's/ /\t/g' > $path/gencode.v25.basic.annotation_intergenic.bed
+#34004 intergenic regions
+
+# Exons
+cat ${gtf} | awk 'BEGIN{OFS="\t";} $3=="exon" {print $1,$4-1,$5}' |  bedtools sort -i - | bedtools merge -i - |  awk '$4=("exon" $4)' | sed 's/ /\t/g' > $path/gencode.v25.basic.annotation_exon.bed
+#288465 exon regions
+
+#Introns
+cat ${gtf} | awk 'BEGIN{OFS="\t";} $3=="gene" {print $1,$4-1,$5}' | bedtools sort -i - | bedtools subtract -a - -b $path/gencode.v25.basic.annotation_exon.bed | bedtools sort -i - | bedtools merge -i - | awk '$4=("intron" $4)' | sed 's/ /\t/g' > $path/gencode.v25.basic.annotation_intron.bed
+# 260139 intronic regions
+
+#utr
+cat ${gtf} | awk 'BEGIN{OFS="\t";} $3=="UTR" {print $1,$4-1,$5}' | bedtools sort -i - | bedtools merge -i - | awk '$4=("UTR" $4)' | sed 's/ /\t/g' > $path/gencode.v25.basic.annotation_utr.bed
+#71528 utr regions
+
+# TSS just to check
+cat /$path/gencode.v25.basic.annotation_TSS_total.gtf | awk 'BEGIN{OFS="\t";} $3=="gene" {print $1,$4-1,$5}' |   awk '$4=("TSS" $4)' | sed 's/ /\t/g' > $path/gencode.v25.basic.annotation_TSS.bed
+# 58037 total regions
+
+#exon_no_utr
+# Subtract utr from exon and maintain both utr and exon separately
+bedtools subtract -a $path/gencode.v25.basic.annotation_exon.bed -b $path/gencode.v25.basic.annotation_utr.bed > ${path}/gencode.v25.basic.annotation_exon_noUTR.bed
+#220513
+
+# Put intergenic - intronic -exonic -utr -exon_no_utr all together
+cd ${path}
+
+cat ${path}/gencode.v25.basic.annotation_intergenic.bed ${path}/gencode.v25.basic.annotation_intron.bed ${path}/gencode.v25.basic.annotation_utr.bed ${path}/gencode.v25.basic.annotation_TSS.bed ${path}/gencode.v25.basic.annotation_exon_noUTR.bed | bedtools sort -i - > ${path}/gencode.v25.basic.annotation_genomicFeature_filt.bed
+
+#Filter for PDO
+cat $path/K_org_UP_log2FC2_padj0.01.bed | awk -F"\t" '{print $1"\t"int(($2+$3)/2)"\t"int(($2+$3)/2)+1"\t"$4}' | bedtools intersect -a - -b ${path}/gencode.v25.basic.annotation_genomicFeature_filt.bed -wo > $path/K_org_UP_log2FC2_padj0.01_genomicFeatures.bed
+
+
+
+
+
+
+
+

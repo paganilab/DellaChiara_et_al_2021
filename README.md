@@ -44,13 +44,14 @@ Main figures are reported first, then the supplementary figures.
 
 Fig2. a:
 
-Fig2. b:
+[Fig2. b](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2b.R): Pearson correlation heatmap of ChIP- seq data for the complete set of five histone modifications across all PDOs
 
-Fig2. c:
+[Fig2. c]:Combinatorial pattern of histone marks in an 8-state model using ChromHMM. The heatmap (Emission plot) displays the frequency of the histone modifications 10 found in each state. 
 
-Fig2. d:
+Fig2. d: The probability of each ChromHMM- defined chromatin state overlapping ATAC-seq regions for TCGA colon adenocarcinoma samples is shown across PDOs using a spider plot. 
 
-Fig2. e-f: See Hepic website
+Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FABP1 and LAMA5 genomic loci in all PDOs. The expanded regions show H3K4me3, H3K27ac, H3K4me1, H3K36me3 and H3K27me3 profiles, along with RNA-seq signal and ChromHMM states for PDOs of different molecular subtypes as indicated.
+
 
 -----
 
@@ -66,13 +67,13 @@ Fig2. e-f: See Hepic website
 
 **Supplementary Figure 2**
 
-Supplementary Fig2. a:
+[Supplementary Fig2. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2b.R): PCA of input normalized ChIP-seq signals for the five histone modifications used to build the ChromHMM 8- state model.
 
-Supplementary Fig2. b:
+Supplementary Fig2. b: Heatmaps showing the annotation of the ChromHMM 8-states with known genomic features (Overlap) and the probability that a state is found in the proximity of another state (Transition).
 
-Supplementary Fig2. c:
+Supplementary Fig2. c: Average proportion of each chromatin state over all PDOs. The chromatin segments for active/flanking TSS and active/flanking enhancer states are merged into the promoter and enhancer functional elements, respectively.
 
-Supplementary Fig2. d:
+Supplementary Fig2. d:  Distribution of the eight ChromHMM 4 states for each PDO.
 
 **Supplementary Figure 5**
 

@@ -20,6 +20,8 @@ The main folder is subdivided in:
 - **nf-pipeline**: contains the custom pipelines of RNA-seq and ChIP-seq managed by [Nextflow](https://www.nextflow.io/).
 - **analysis**: contains the scripts of the downstream analysis and the code to produce the figures.
 
+To run the downstreamn analysis we used [JupyterLab](https://jupyter.org/). If you want to convert the scripts and run them as notebook using Jupyter, please see [Jupytext](https://github.com/mwouts/jupytext)
+
 -----
 
 Below a more detailed link to the script for each figure present in the paper (figure legend descriptions from the paper are reported for a better understanding).

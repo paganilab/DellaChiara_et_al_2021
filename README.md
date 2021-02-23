@@ -60,8 +60,6 @@ Main figures are reported first, then the supplementary figures.
 
 [Fig2. d](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig2d.py): The probability of each ChromHMM- defined chromatin state overlapping ATAC-seq regions for TCGA colon adenocarcinoma samples is shown across PDOs using a spider plot. 
 
-Fig2. e-f see Hepic website: Representative tracks of ChromHMM states for the FABP1 and LAMA5 genomic loci in all PDOs. The expanded regions show H3K4me3, H3K27ac, H3K4me1, H3K36me3 and H3K27me3 profiles, along with RNA-seq signal and ChromHMM states for PDOs of different molecular subtypes as indicated.
-
 **Figure 3**
 
 [Fig3. a](https://github.com/paganilab/DellaChiara_et_al_2021/blob/main/bulk_chipseq/analysis/scr/Fig3a_b_f.R): Unsupervised clustering analysis and pearson correlation heatmap of H3K27ac ChIP-seq data for the 33,131 ChromHMM-defined active enhancers clearly distinguish PDOs from normal colon tissues.

@@ -28,7 +28,7 @@ The **RNA-seq and ChIP-seq data** generated during this study are **available** 
 
 - [ChIP-seq data](https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-8416/)
 
-All the data used to produced the genomic overview present in the paper are available at our genomic we browser:
+All the data used to produced the genomic overview present in the paper are available at our genomic web browser:
 
 > https://ifom.eu/bioinformatics/hepic
 

@@ -22,6 +22,12 @@ The main folder is subdivided in:
 
 To run the downstreamn analysis we used [JupyterLab](https://jupyter.org/). If you want to convert the scripts and run them as notebook using Jupyter, please see [Jupytext](https://github.com/mwouts/jupytext)
 
+The RNA-seq and ChIP-seq data generated during this study are available at the European Nucleotide Archive under these links:
+
+- [RNA-seq data](https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-8448/)
+
+- [ChIP-seq data](https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-8416/)
+
 -----
 
 Below a more detailed link to the script for each figure present in the paper (figure legend descriptions from the paper are reported for a better understanding).
